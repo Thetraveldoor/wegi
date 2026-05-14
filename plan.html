@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moj tjedni plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f0f12;
+  --card: #16161c;
+  --card2: #1c1c24;
+  --border: rgba(255,255,255,0.08);
+  --border2: rgba(255,255,255,0.14);
+  --text: #e8e6f0;
+  --muted: #8a8899;
+  --accent: #b8f0a0;
+  --accent2: #f0c8a0;
+  --accent3: #a0c8f0;
+  --accent4: #f0a0c8;
+  --accent5: #e0a0f0;
+  --red: #f07070;
+  --serif: 'Syne', sans-serif;
+  --sans: 'DM Sans', sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);font-size:14px;line-height:1.6;min-height:100vh}
+
+/* HEADER */
+.hero{padding:48px 24px 32px;max-width:780px;margin:0 auto}
+.hero-tag{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);font-weight:500;margin-bottom:12px}
+.hero h1{font-family:var(--serif);font-size:clamp(28px,6vw,52px);font-weight:800;line-height:1.05;margin-bottom:16px}
+.hero h1 span{color:var(--accent)}
+.hero-sub{color:var(--muted);font-size:15px;max-width:520px;line-height:1.7}
+
+/* VITALS STRIP */
+.vitals{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px 24px;max-width:780px;margin:0 auto 24px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.vital-item{text-align:center}
+.vital-num{font-family:var(--serif);font-size:22px;font-weight:700}
+.vital-num.green{color:var(--accent)}
+.vital-num.orange{color:var(--accent2)}
+.vital-num.blue{color:var(--accent3)}
+.vital-num.pink{color:var(--accent4)}
+.vital-label{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* NAV */
+.nav{background:var(--card);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.nav-inner{max-width:780px;margin:0 auto;display:flex;overflow-x:auto;gap:0;padding:0 8px;scrollbar-width:none}
+.nav-inner::-webkit-scrollbar{display:none}
+.nav-btn{background:none;border:none;padding:14px 18px;font-family:var(--sans);font-size:12.5px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .2s}
+.nav-btn:hover{color:var(--text)}
+.nav-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
+
+/* CONTENT */
+.content{max-width:780px;margin:0 auto;padding:28px 24px 80px}
+.section{display:none}
+.section.active{display:block}
+
+/* BASICS CARDS */
+.basics-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:24px}
+@media(max-width:580px){.basics-grid{grid-template-columns:1fr}.vitals{grid-template-columns:2fr 2fr}}
+.bcard{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px}
+.bcard-icon{font-size:24px;margin-bottom:8px}
+.bcard h3{font-family:var(--serif);font-size:16px;font-weight:700;margin-bottom:8px}
+.bcard p,.bcard li{font-size:13px;color:var(--muted);line-height:1.7}
+.bcard ul{padding-left:16px}
+.bcard li{margin-bottom:2px}
+.bcard .highlight{color:var(--accent);font-weight:500}
+
+.info-box{background:linear-gradient(135deg,rgba(184,240,160,0.08),rgba(184,240,160,0.03));border:1px solid rgba(184,240,160,0.2);border-radius:12px;padding:14px 16px;margin-bottom:16px;font-size:13px;color:#b8d4ac;line-height:1.7}
+.warn-box{background:linear-gradient(135deg,rgba(240,200,160,0.08),rgba(240,200,160,0.03));border:1px solid rgba(240,200,160,0.2);border-radius:12px;padding:14px 16px;margin-bottom:16px;font-size:13px;color:#d4c4a0;line-height:1.7}
+
+/* DAY PLAN */
+.day-title{font-family:var(--serif);font-size:20px;font-weight:700;margin-bottom:4px}
+.day-subtitle{font-size:12px;color:var(--muted);margin-bottom:20px}
+
+.timeline{position:relative;padding-left:24px;border-left:1px solid var(--border)}
+.tl-item{position:relative;margin-bottom:0;padding:16px 0 16px 20px}
+.tl-dot{position:absolute;left:-28px;top:20px;width:8px;height:8px;border-radius:50%;background:var(--border2);border:2px solid var(--border2)}
+.tl-dot.food{background:var(--accent);border-color:var(--accent)}
+.tl-dot.water{background:var(--accent3);border-color:var(--accent3)}
+.tl-dot.move{background:var(--accent2);border-color:var(--accent2)}
+.tl-dot.skin{background:var(--accent4);border-color:var(--accent4)}
+.tl-dot.sleep{background:var(--accent5);border-color:var(--accent5)}
+.tl-dot.study{background:#888;border-color:#888}
+.tl-time{font-size:11px;color:var(--muted);font-weight:500;letter-spacing:0.5px;margin-bottom:3px}
+.tl-title{font-weight:500;font-size:14px;margin-bottom:3px}
+.tl-desc{font-size:12.5px;color:var(--muted);line-height:1.6}
+.tl-tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;font-weight:500;margin-right:4px;margin-bottom:4px}
+.tag-food{background:rgba(184,240,160,0.12);color:var(--accent)}
+.tag-water{background:rgba(160,200,240,0.12);color:var(--accent3)}
+.tag-move{background:rgba(240,200,160,0.12);color:var(--accent2)}
+.tag-skin{background:rgba(240,160,200,0.12);color:var(--accent4)}
+.tag-sleep{background:rgba(224,160,240,0.12);color:var(--accent5)}
+.tag-study{background:rgba(180,180,180,0.1);color:#aaa}
+
+.recipe-inline{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:14px;margin-top:8px;font-size:12.5px}
+.recipe-inline h4{font-family:var(--serif);font-size:14px;font-weight:600;margin-bottom:8px;color:var(--accent)}
+.recipe-inline p{color:var(--muted);margin-bottom:4px}
+.recipe-inline ul{padding-left:14px;color:var(--muted)}
+.recipe-inline li{margin-bottom:2px}
+
+/* WATER TRACKER */
+.water-section{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:20px}
+.water-section h3{font-family:var(--serif);font-size:16px;margin-bottom:4px}
+.water-section p{font-size:12.5px;color:var(--muted);margin-bottom:14px}
+.water-glasses{display:flex;flex-wrap:wrap;gap:8px}
+.glass{width:42px;height:42px;border-radius:8px;border:2px solid var(--border2);background:transparent;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all .2s;color:var(--muted)}
+.glass.filled{background:rgba(160,200,240,0.15);border-color:var(--accent3);color:var(--accent3)}
+.water-count{margin-top:10px;font-size:13px;color:var(--muted)}
+.water-count span{color:var(--accent3);font-weight:500}
+
+/* SKIN/HAIR */
+.routine-step{display:flex;gap:14px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--border)}
+.routine-step:last-child{border-bottom:none}
+.step-num{width:28px;height:28px;border-radius:50%;background:rgba(240,160,200,0.12);border:1px solid rgba(240,160,200,0.3);color:var(--accent4);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.step-body h4{font-size:13.5px;font-weight:500;margin-bottom:2px}
+.step-body p{font-size:12px;color:var(--muted);line-height:1.6}
+
+/* LEGEND */
+.legend{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--muted)}
+.legend-dot{width:8px;height:8px;border-radius:50%}
+
+/* SNACK BOX */
+.snack-box{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-top:6px;font-size:12.5px;color:var(--muted)}
+.snack-box strong{color:var(--accent2)}
+
+/* TODAY badge */
+.today-badge{display:inline-block;background:rgba(184,240,160,0.15);border:1px solid rgba(184,240,160,0.4);color:var(--accent);font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;border-radius:6px;margin-left:8px;vertical-align:middle}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-tag">Tvoj osobni plan · 8 dana</div>
+  <h1>Počinjemo<br><span>danas.</span></h1>
+  <p class="hero-sub">Plan je napravljen točno za tebe — s faksom, putovanjem, ručkom van i svim tvojim izazovima. Prati dan po dan, korak po korak.</p>
+</div>
+
+<div class="vitals">
+  <div class="vital-item"><div class="vital-num green">7.5h</div><div class="vital-label">spavanje</div></div>
+  <div class="vital-item"><div class="vital-num blue">2.5L</div><div class="vital-label">voda dnevno</div></div>
+  <div class="vital-item"><div class="vital-num orange">1400–1600</div><div class="vital-label">kcal/dan</div></div>
+  <div class="vital-item"><div class="vital-num pink">65 kg</div><div class="vital-label">cilj</div></div>
+</div>
+
+<div class="nav">
+  <div class="nav-inner">
+    <button class="nav-btn active" onclick="show('osnove')">Osnove</button>
+    <button class="nav-btn" onclick="show('pet14')">Pet 14.5. ★</button>
+    <button class="nav-btn" onclick="show('sub')">Sub 15.5.</button>
+    <button class="nav-btn" onclick="show('ned')">Ned 16.5.</button>
+    <button class="nav-btn" onclick="show('pon')">Pon 17.5.</button>
+    <button class="nav-btn" onclick="show('uto')">Uto 18.5.</button>
+    <button class="nav-btn" onclick="show('sri')">Sri 19.5.</button>
+    <button class="nav-btn" onclick="show('cet')">Čet 20.5.</button>
+    <button class="nav-btn" onclick="show('pet21')">Pet 21.5.</button>
+    <button class="nav-btn" onclick="show('voda')">💧 Voda</button>
+    <button class="nav-btn" onclick="show('koza')">Koža &amp; Kosa</button>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- ===== OSNOVE ===== -->
+<div class="section active" id="osnove">
+  <div class="warn-box">
+    ⚠️ <strong>Važno:</strong> Padanje kose, bolovi u leđima, loša koža i zadržavanje vode mogu biti simptomi manjka željeza, vitamina D, B12 ili problema sa štitnjačom. Naruči se na osnovne pretrage što prije — plan prehrane pomaže, ali liječnik je tu neophodan.
+  </div>
+  <div class="basics-grid">
+    <div class="bcard">
+      <div class="bcard-icon">😴</div>
+      <h3>Spavanje</h3>
+      <ul>
+        <li>Idi spavati: <span class="highlight">23:00</span></li>
+        <li>Probudi se: <span class="highlight">07:00</span> (7–7.5h)</li>
+        <li>Vikend max 08:00 — ne "nadoknađuj" spavanje</li>
+        <li>Telefon face-down od 22:30</li>
+        <li>Tuš uvijek navečer, ne ujutro</li>
+      </ul>
+    </div>
+    <div class="bcard">
+      <div class="bcard-icon">💧</div>
+      <h3>Voda — ključno!</h3>
+      <ul>
+        <li>Cilj: <span class="highlight">2.5L dnevno</span></li>
+        <li>Čim ustaneš: <span class="highlight">500ml odmah</span></li>
+        <li>Prije svakog obroka: <span class="highlight">300ml</span></li>
+        <li>Svakih 1.5h: čaša vode</li>
+        <li>Voda smanjuje oticanje i pomaže crijevima</li>
+      </ul>
+    </div>
+    <div class="bcard">
+      <div class="bcard-icon">🏃</div>
+      <h3>Vježbanje</h3>
+      <ul>
+        <li>Šetnja <span class="highlight">30–45 min</span> svaki dan</li>
+        <li>Stretching 10 min ujutro za leđa</li>
+        <li>2× tjedno lagani trening (plan u danima)</li>
+        <li>Šetnja NOSI metabolizam, smanjuje oteklinu</li>
+      </ul>
+    </div>
+    <div class="bcard">
+      <div class="bcard-icon">🍽️</div>
+      <h3>Hrana — pravila</h3>
+      <ul>
+        <li>Nikad preskočiti doručak — glad = šećer</li>
+        <li>Proteini u svakom obroku</li>
+        <li>Nema procesirane hrane, bijelog brašna, šećera</li>
+        <li>Zadnji obrok: <span class="highlight">19:00–20:00</span></li>
+        <li>Kad osjetiš glad: prvo popij vodu</li>
+      </ul>
+    </div>
+    <div class="bcard">
+      <div class="bcard-icon">✨</div>
+      <h3>Koža — jutro</h3>
+      <ul>
+        <li>Umij lice mlakom vodom (bez sapuna)</li>
+        <li>Niacinamide serum (protiv prištića)</li>
+        <li>Lagana hidratantna krema bez ulja</li>
+        <li>SPF 30+ svaki dan, čak i oblačno</li>
+      </ul>
+    </div>
+    <div class="bcard">
+      <div class="bcard-icon">🌙</div>
+      <h3>Koža — večer</h3>
+      <ul>
+        <li>Dvostruko čišćenje: micelarna + blagi gel</li>
+        <li>Salicilna kiselina (BHA) na prištiće</li>
+        <li>Noćna hidratantna krema</li>
+        <li>Čisti jastučić svake 2–3 dana</li>
+      </ul>
+    </div>
+    <div class="bcard">
+      <div class="bcard-icon">💇</div>
+      <h3>Kosa</h3>
+      <ul>
+        <li>Pranje 2–3× tjedno, ne svaki dan</li>
+        <li>Šampon: sulfate-free (bez sulfata)</li>
+        <li>Uvijek kondicionator na duljine</li>
+        <li>Nikad fohn na mokru kosu bez zaštite</li>
+        <li>Hrana bogata biotinom i željezom pomaže</li>
+      </ul>
+    </div>
+    <div class="bcard">
+      <div class="bcard-icon">🧠</div>
+      <h3>Šećer i glad</h3>
+      <ul>
+        <li>Glad = pij vodu prvo, čekaj 10 min</li>
+        <li>Prištić voće, orahe, jaje kad baš moraš grickati</li>
+        <li>Cimet u kavi/čaju smanjuje žudnju za šećerom</li>
+        <li>Nikad ne idi po hranu gladna</li>
+        <li>Zamijeni šećer: bobičasto voće, tamna čokolada 85%</li>
+      </ul>
+    </div>
+  </div>
+  <div class="info-box">
+    💡 <strong>Zašto zadržavaš vodu?</strong> Premalo vode + previše soli + premalo kretanja = tijelo "paniči" i drži vodu. Kad budeš pila 2.5L + šetala svaki dan, oteklina će se smanjiti u roku 5–7 dana.
+  </div>
+  <div class="info-box">
+    💡 <strong>Zatvor i bolovi crijeva:</strong> Magnezij (citrat) navečer + 2.5L vode + vlakna iz povrća = rješenje u 3–5 dana. Probaj šalicu tople limunade ujutro natašte.
+  </div>
+</div>
+
+<!-- ===== PETAK 14.5. ===== -->
+<div class="section" id="pet14">
+  <div class="day-title">Petak, 14. svibnja <span class="today-badge">danas</span></div>
+  <div class="day-subtitle">Dan 1 — počinjemo odmah! Slobodan dan, fokus na uspostavljanje rutine.</div>
+
+  <div class="info-box">🌟 <strong>Danas je prvi dan!</strong> Ne trebaš biti savršena — samo počni. Svaki korak koji danas napraviš je pobjeda.</div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent)"></div>hrana</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent3)"></div>voda</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent2)"></div>kretanje</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent4)"></div>koža/kosa</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent5)"></div>san</div>
+  </div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot water"></div>
+      <div class="tl-time">ODMAH — sad, dok čitaš ovo</div>
+      <div class="tl-title">Popij čašu vode</div>
+      <div class="tl-desc">Idi, popij. Ozbiljno. 😄 Stavi bocu vode pored sebe.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot skin"></div>
+      <div class="tl-time">Sljedeće — jutarnja rutina (ako još nije)</div>
+      <div class="tl-title">Koža — jutro</div>
+      <div class="tl-desc">1. Umij lice mlakom vodom<br>2. Niacinamide serum (lagano utapkaj)<br>3. Hidratantna krema bez ulja<br>4. SPF 30+</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot move"></div>
+      <div class="tl-time">Što prije — stretching</div>
+      <div class="tl-title">10 minuta za leđa</div>
+      <div class="tl-desc">Cat-cow 1 min → child's pose 1 min → knee-to-chest svaki 1 min → piriformis stretch svaki 1 min → happy baby 1 min. YouTube: "10 min morning back stretch".</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot food"></div>
+      <div class="tl-time">Doručak (ako ga nisi imala)</div>
+      <div class="tl-title">Proteinski doručak — ne preskakati!</div>
+      <div class="tl-desc"><span class="tl-tag tag-food">~400 kcal</span><span class="tl-tag tag-food">visoki proteini</span></div>
+      <div class="recipe-inline">
+        <h4>Kajgana sa špinatom + voće</h4>
+        <ul>
+          <li>3 jaja (razmuti u zdjeli)</li>
+          <li>šaka špinata (svježi ili smrznuti)</li>
+          <li>1 žlica maslinovog ulja</li>
+          <li>sol, papar, opcija: malo paprike u prahu</li>
+          <li>uz to: šaka jagoda ili bobičastog voća</li>
+        </ul>
+        <p style="margin-top:8px"><strong>Kako:</strong> Zagrij ulje, baci špinat 1 min, ulij razmućena jaja, miješaj na laganoj vatri. Gotovo za 5 min.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot move"></div>
+      <div class="tl-time">Danas — šetnja</div>
+      <div class="tl-title">Šetnja 40 minuta</div>
+      <div class="tl-desc">Brzo hodanje, ne trčanje. Slušaj podcast ili muziku. Ovo je tvoj metabolizam booster broj 1. Ponesi bocu vode.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot food"></div>
+      <div class="tl-time">~12:00 — ručak</div>
+      <div class="tl-title">Losos s povrćem</div>
+      <div class="tl-desc"><span class="tl-tag tag-food">~500 kcal</span></div>
+      <div class="recipe-inline">
+        <h4>Losos s brokula pireom</h4>
+        <ul>
+          <li>1 file lososa (150g)</li>
+          <li>200g brokule — kuhana na pari 10 min, zblendana s malo kokosovog mlijeka i kurkumom</li>
+          <li>Maslinovo ulje, sol, limunov sok</li>
+          <li>Losos peći u tavi 4 min po strani</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot water"></div>
+      <div class="tl-time">Poslijepodne</div>
+      <div class="tl-title">Čaša vode svakih 1.5h + biljni čaj</div>
+      <div class="tl-desc">Kopriva ili zeleni čaj — dobri za kožu i kosu. Bez šećera.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot food"></div>
+      <div class="tl-time">~17:00 — međuobrok</div>
+      <div class="tl-title">Snack (ako si gladna)</div>
+      <div class="snack-box"><strong>Opcije:</strong> šaka oraha (20g) · 1 jabuka · kuhano jaje · žlica bademovog maslaca sa štapićima celera · kokosov jogurt bez šećera</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot food"></div>
+      <div class="tl-time">19:00 — večera</div>
+      <div class="tl-title">Piletina sa zelenim povrćem</div>
+      <div class="tl-desc"><span class="tl-tag tag-food">~450 kcal</span></div>
+      <div class="recipe-inline">
+        <h4>Piletina s blitvom i češnjakom</h4>
+        <ul>
+          <li>150g pilećih prsa — posoli, popapri, peći 5 min po strani</li>
+          <li>Svežanj blitve — pirjaj na ulju s češnjakom 5 min</li>
+          <li>Limunov sok preko svega</li>
+          <li>Po želji: žlica kokosovog jogurta sa strane</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot skin"></div>
+      <div class="tl-time">20:30 — tuš i večernja rutina</div>
+      <div class="tl-title">Tuš, koža, priprema za sutra</div>
+      <div class="tl-desc">
+        <strong>Tuš:</strong> mlaka voda, na kraju hladnija (30 sek) — pomaže cirkulaciji<br>
+        <strong>Kosa:</strong> danas peru! Sulfate-free šampon, kondicionator na duljine 3 min, hladno ispiranje<br>
+        <strong>Lice večer:</strong> micelarna → gel čistač → BHA na prištiće → hidratantna krema<br>
+        <strong>Za sutra:</strong> stavi bocu vode pored kreveta!
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot water"></div>
+      <div class="tl-time">21:30</div>
+      <div class="tl-title">Zadnja čaša vode + magnezij</div>
+      <div class="tl-desc">Magnezij citrat (200mg) — pomaže crijevima, smanjuje napetost, bolji san. Kupiti u ljekarni.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot sleep"></div>
+      <div class="tl-time">22:30</div>
+      <div class="tl-title">Telefon dole, soba zatamni</div>
+      <div class="tl-desc">Čitaj ili lagani stretching. Ovo je tvoj "wind down" signal za mozak.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot sleep"></div>
+      <div class="tl-time">23:00 — spavanje</div>
+      <div class="tl-title">Dan 1 gotov! 🌙</div>
+      <div class="tl-desc">Čestitamo — napravila si prvi korak. Sutra nastavljamo.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SUBOTA 15.5. ===== -->
+<div class="section" id="sub">
+  <div class="day-title">Subota, 15. svibnja</div>
+  <div class="day-subtitle">Slobodan dan — nema faksa, nema obveza. Fokus: učvrstiti rutinu.</div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent)"></div>hrana</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent3)"></div>voda</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent2)"></div>kretanje</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent4)"></div>koža/kosa</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent5)"></div>san</div>
+  </div>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot water"></div>
+      <div class="tl-time">07:00 — buđenje</div>
+      <div class="tl-title">Ustani, ne gledaj odmah telefon</div>
+      <div class="tl-desc">Odmah popij <strong style="color:var(--accent3)">500ml vode</strong> — stavi bocu sa sobom u sobu navečer. Prošetaj do prozora, otvori ga. 5 dubokih udisaja.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot skin"></div>
+      <div class="tl-time">07:10 — jutarnja rutina lica</div>
+      <div class="tl-title">Koža — jutro</div>
+      <div class="tl-desc">1. Umij lice mlakom vodom<br>2. Niacinamide serum (lagano utapkaj)<br>3. Hidratantna krema bez ulja<br>4. SPF 30+</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot move"></div>
+      <div class="tl-time">07:20 — stretching</div>
+      <div class="tl-title">10 minuta za leđa (obavezno!)</div>
+      <div class="tl-desc">Na podu: cat-cow 1 min → child's pose 1 min → knee-to-chest svaki 1 min → piriformis stretch svaki 1 min → happy baby 1 min.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot food"></div>
+      <div class="tl-time">07:45 — doručak</div>
+      <div class="tl-title">Proteinski doručak</div>
+      <div class="tl-desc"><span class="tl-tag tag-food">~400 kcal</span></div>
+      <div class="recipe-inline">
+        <h4>Kajgana sa špinatom + voće</h4>
+        <ul>
+          <li>3 jaja + šaka špinata + maslinovo ulje</li>
+          <li>sol, papar, paprika u prahu</li>
+          <li>uz to: šaka jagoda ili bobičastog voća</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot water"></div>
+      <div class="tl-time">09:00</div>
+      <div class="tl-title">Čaša vode + zeleni čaj ili biljna infuzija</div>
+      <div class="tl-desc">Bez šećera. Kopriva ili zeleni čaj — dobri za kožu i kosu.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot move"></div>
+      <div class="tl-time">09:30 — kretanje</div>
+      <div class="tl-title">Šetnja 40 minuta</div>
+      <div class="tl-desc">Brzo hodanje, ne trčanje. Slušaj podcast ili muziku. Ponesi bocu vode.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot food"></div>
+      <div class="tl-time">10:30 — snack (ako si gladna)</div>
+      <div class="tl-title">Opcionalni snack</div>
+      <div class="snack-box"><strong>Opcije:</strong> šaka oraha (20g) · 1 jabuka · kuhano jaje · žlica bademovog maslaca sa štapićima celera · jogurt bez šećera</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot water"></div>
+      <div class="tl-time">11:30</div>
+      <div class="tl-title">Čaša vode pred ručak</div>
+      <div class="tl-desc">300ml vode 20 minuta prije ručka — smanjuje količinu hrane koju pojediš.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot food"></div>
+      <div class="tl-time">12:00 — ručak</div>
+      <div class="tl-title">Losos s povrćem</div>
+      <div class="tl-desc"><span class="tl-tag tag-food">~500 kcal</span></div>
+      <div class="recipe-inline">
+        <h4>Losos s brokula pireom</h4>
+        <ul>
+          <li>1 file lososa (150g)</li>
+          <li>200g brokule — kuhana na pari 10 min, zblendana s malo kokosovog mlijeka i kurkumom</li>
+          <li>Maslinovo ulje, sol, limunov sok</li>
+          <li>Losos peći u tavi 4 min po strani</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot study"></div>
+      <div class="tl-time">13:30 — 17:00</div>
+      <div class="tl-title">Pisanje za faks (3.5h)</div>
+      <div class="tl-desc">Postavi timer: 50 min rada → 10 min pauza. Na stolu uvijek boca vode.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot water"></div>
+      <div class="tl-time">15:30</div>
+      <div class="tl-title">Čaša vode, biljni čaj</div>
+      <div class="tl-desc">Kopriva — pomaže kod zadržavanja vode i kose.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot food"></div>
+      <div class="tl-time">17:30 — međuobrok</div>
+      <div class="tl-title">Snack pred večeru</div>
+      <div class="snack-box"><strong>Opcija:</strong> Kokosov jogurt (bez šećera) + jagode + žlica sjemenki bundeve. Ili: kuhano jaje + štapić krastavca.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot food"></div>
+      <div class="tl-time">19:00 — večera</div>
+      <div class="tl-title">Piletina sa zelenim povrćem</div>
+      <div class="tl-desc"><span class="tl-tag tag-food">~450 kcal</span></div>
+      <div class="recipe-inline">
+        <h4>Piletina s blitvom i češnjakom</h4>
+        <ul>
+          <li>150g pilećih prsa — posoli, popapri, peći 5 min po strani</li>
+          <li>Svežanj blitve — pirjaj na ulju s češnjakom 5 min</li>
+          <li>Limunov sok preko svega</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot skin"></div>
+      <div class="tl-time">20:30 — tuš i večernja rutina</div>
+      <div class="tl-title">Tuš, kosa, koža</div>
+      <div class="tl-desc">
+        <strong>Tuš:</strong> mlaka voda, na kraju hladnija (30 sek)<br>
+        <strong>Lice večer:</strong> micelarna → gel čistač → BHA na prištiće → hidratantna krema
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot water"></div>
+      <div class="tl-time">21:30</div>
+      <div class="tl-title">Zadnja čaša vode + magnezij</div>
+      <div class="tl-desc">Magnezij citrat (200mg) — pomaže crijevima, smanjuje napetost, bolji san.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot sleep"></div>
+      <div class="tl-time">22:30 — odvijanje od ekrana</div>
+      <div class="tl-title">Telefon dole, soba zatamni</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot sleep"></div>
+      <div class="tl-time">23:00 — spavanje</div>
+      <div class="tl-title">Laku noć! 🌙</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== NEDJELJA 16.5. ===== -->
+<div class="section" id="ned">
+  <div class="day-title">Nedjelja, 16. svibnja</div>
+  <div class="day-subtitle">⚠️ Cijeli dan na putu — ručak i večera vani. Snack sa sobom u torbi!</div>
+
+  <div class="warn-box">🚗 Putovanje cijeli dan. Sve što je u tvojoj kontroli: jutarnja rutina + snack u torbi + pametni izbor kad jedeš vani + voda.</div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot water"></div>
+      <div class="tl-time">07:00 — buđenje</div>
+      <div class="tl-title">500ml vode odmah</div>
+      <div class="tl-desc">Stavi bocu vode pored kreveta navečer. Bez telefona prvih 10 min.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot skin"></div>
+      <div class="tl-time">07:10</div>
+      <div class="tl-title">Brza jutarnja rutina lica (7 min)</div>
+      <div class="tl-desc">Umij → serum → krema → SPF. Na putu SPF je obavezan!</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot food"></div>
+      <div class="tl-time">07:30 — doručak (kod kuće, brzo)</div>
+      <div class="tl-title">Brzi proteinski doručak</div>
+      <div class="recipe-inline">
+        <h4>2 kuhana jaja + voće</h4>
+        <ul>
+          <li>2–3 kuhana jaja (skuhaj navečer ili ujutro 10 min)</li>
+          <li>Šaka jagoda / bobičasto voće</li>
+          <li>Šaka oraha ili badema</li>
+          <li>Zeleni čaj ili crna kava bez šećera</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot food"></div>
+      <div class="tl-time">Prije polaska — spremi snack</div>
+      <div class="tl-title">Torba preživljavanja 🎒</div>
+      <div class="snack-box">
+        <strong>Spremi u torbu:</strong><br>
+        · Boca vode 1L (puni je kad god možeš)<br>
+        · 2 kuhana jaja (u kutijici)<br>
+        · Šaka oraha ili badema (20–30g u vrećici)<br>
+        · 1–2 jabuke ili mandarine<br>
+        · Tamna čokolada 85% (2–3 kockice — za krize šećera!)
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot food"></div>
+      <div class="tl-time">Ručak vani</div>
+      <div class="tl-title">Kako birati u restoranu</div>
+      <div class="tl-desc">
+        ✅ <strong>Biraj:</strong> riba/piletina na žaru + salata ili povrće · juha (ne kremasta) · jaja na bilo koji način<br>
+        ❌ <strong>Izbjegni:</strong> pohano, kremasti umaci, bijeli kruh, tjestenina, pice, sladoled<br>
+        💧 Naruči veliku vodu uz obrok.
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot food"></div>
+      <div class="tl-time">Večera vani</div>
+      <div class="tl-title">Ista logika — protein + povrće</div>
+      <div class="tl-desc">Ako imaš izbor: salata s proteinom (tuna, piletina, jaje). Zatraži preljev sa strane. Izbjegaj kruh sa stola.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot skin"></div>
+      <div class="tl-time">Navečer (kad dođeš kući)</div>
+      <div class="tl-title">Večernja rutina lica — obavezno!</div>
+      <div class="tl-desc">Makni sve s lica — micelarna → gel čistač → BHA → krema. Koliko god bila umorna.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot sleep"></div>
+      <div class="tl-time">23:00 — najkasnije</div>
+      <div class="tl-title">Spavanje — sutra faks od 10h!</div>
+      <div class="tl-desc">Magnezij pred spavanje ako ga imaš. Hladna soba.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PONEDJELJAK 17.5. ===== -->
+<div class="section" id="pon">
+  <div class="day-title">Ponedjeljak, 17. svibnja</div>
+  <div class="day-subtitle">Faks 10:00–17:00 s pauzom — ručak donesi od kuće!</div>
+
+  <div class="info-box">🎒 Ujutro napravi ručak za ponijeti. Plan je ispod — jednostavno, nosi se u Tupperwareu.</div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot water"></div>
+      <div class="tl-time">07:00 — buđenje</div>
+      <div class="tl-title">500ml vode odmah</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot move"></div>
+      <div class="tl-time">07:10</div>
+      <div class="tl-title">10 min stretching za leđa</div>
+      <div class="tl-desc">Cat-cow, child's pose, knee-to-chest. Obavezno — sjedenje na faksu teško je za leđa.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot skin"></div>
+      <div class="tl-time">07:20</div>
+      <div class="tl-title">Jutarnja rutina lica</div>
+      <div class="tl-desc">Umij → serum → krema → SPF</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot food"></div>
+      <div class="tl-time">07:30 — doručak + priprema ručka</div>
+      <div class="tl-title">Doručak i pakiranje za faks</div>
+      <div class="recipe-inline">
+        <h4>Doručak: Jaja s povrćem (10 min)</h4>
+        <ul>
+          <li>3 scrambled eggs s paprikom i špinatom</li>
+          <li>Zeleni čaj bez šećera</li>
+          <li>Uz to: šaka bobičastog voća</li>
+        </ul>
+        <h4 style="margin-top:12px">Ručak za ponijeti (pripremi odmah!):</h4>
+        <ul>
+          <li>150g pilećih prsa — ostaci od jučer ili brzo peći (10 min)</li>
+          <li>Šaka rukole + cherry rajčice + krastavac</li>
+          <li>Limun + maslinovo ulje kao preljev (u posebnoj bočici)</li>
+          <li>2 kuhana jaja extra (za snack)</li>
+          <li>Boca vode 1L</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot study"></div>
+      <div class="tl-time">10:00 — faks</div>
+      <div class="tl-title">Na faksu — pij vodu non-stop</div>
+      <div class="tl-desc">Boca vode uvijek na stolu. Svaki sat popij barem čašu.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot food"></div>
+      <div class="tl-time">~12:30 — ručak (pauza)</div>
+      <div class="tl-title">Piletina salata iz Tupperwarea</div>
+      <div class="tl-desc">Prelij dresing tek sad, ne ujutro (da ne uvehne). Jedi polako.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot food"></div>
+      <div class="tl-time">~15:00 — snack</div>
+      <div class="tl-title">Kuhana jaja ili orasi</div>
+      <div class="snack-box"><strong>Iz torbe:</strong> 2 kuhana jaja · šaka oraha · jabuka · tamna čokolada 2 kockice</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot move"></div>
+      <div class="tl-time">17:30 — dolazak kući</div>
+      <div class="tl-title">Šetnja 30 min</div>
+      <div class="tl-desc">Nemoj odmah sjesti — prošetaj odmah. Idealno: idi pješke dio puta s faksa.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot food"></div>
+      <div class="tl-time">19:00 — večera</div>
+      <div class="tl-title">Riba s povrćem</div>
+      <div class="recipe-inline">
+        <h4>Skuša ili tunjevina s blitvom</h4>
+        <ul>
+          <li>Konzerva tunjevine u ulju (ili 150g skuše)</li>
+          <li>Svežanj blitve — kuhati na vodi 5 min, ocijediti, preliti maslinovim uljem i limunom</li>
+          <li>Opcija: 1 kuhano jaje extra</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot skin"></div>
+      <div class="tl-time">20:30 — tuš + večernja rutina</div>
+      <div class="tl-title">Tuš, lice, magnezij</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot sleep"></div>
+      <div class="tl-time">23:00</div>
+      <div class="tl-title">Spavanje 🌙</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== UTORAK 18.5. ===== -->
+<div class="section" id="uto">
+  <div class="day-title">Utorak, 18. svibnja</div>
+  <div class="day-subtitle">Faks 08:00–10:00, ostatak slobodan — pisanje 3–5h</div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot water"></div>
+      <div class="tl-time">06:15 — buđenje</div>
+      <div class="tl-title">500ml vode odmah</div>
+      <div class="tl-desc">Rano buđenje — kratka rutina, odmah na faks.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot skin"></div>
+      <div class="tl-time">06:20</div>
+      <div class="tl-title">Brza rutina lica (5 min)</div>
+      <div class="tl-desc">Umij → serum → krema → SPF. Gotovo.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot food"></div>
+      <div class="tl-time">06:35 — doručak</div>
+      <div class="tl-title">Brzi doručak + snack za faks</div>
+      <div class="recipe-inline">
+        <h4>Overnight chia (pripremi večer prije)</h4>
+        <ul>
+          <li>200ml kokosovog mlijeka + 2 žlice chia sjemenki + cimet → u hladnjak</li>
+          <li>Ujutro dodaj: jagode, žlica sjemenki bundeve</li>
+          <li>Alternativa brza: 2 kuhana jaja + jabuka</li>
+        </ul>
+        <p><strong>Za faks u torbu:</strong> orasi + jabuka + boca vode</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot study"></div>
+      <div class="tl-time">08:00–10:00 — faks</div>
+      <div class="tl-title">Pij vodu na faksu</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot move"></div>
+      <div class="tl-time">10:30 — dolazak kući</div>
+      <div class="tl-title">Šetnja 40 min odmah!</div>
+      <div class="tl-desc">Dok je energija od jutra. Poslije šetnje tuš, onda pisanje.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot food"></div>
+      <div class="tl-time">11:30 — ručak</div>
+      <div class="tl-title">Krem juha od brokule + jaje</div>
+      <div class="recipe-inline">
+        <h4>Brza krem juha</h4>
+        <ul>
+          <li>1 glavica brokule — kuhati 10 min</li>
+          <li>Zblendati s 100ml kokosovog mlijeka, 1 žličica kurkume, sol</li>
+          <li>Uz to: 2 kuhana jaja</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot study"></div>
+      <div class="tl-time">12:30–16:30 — pisanje (4h)</div>
+      <div class="tl-title">Pomodoro: 50 min rad → 10 min pauza</div>
+      <div class="tl-desc">U svakoj pauzi: čaša vode + ustani se. Nema grickanja za stolom.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot food"></div>
+      <div class="tl-time">16:30 — snack</div>
+      <div class="tl-title">Snack</div>
+      <div class="snack-box"><strong>Opcije:</strong> Kokosov jogurt + bobičasto voće · Šaka badema · Kuhano jaje + krastavac</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot food"></div>
+      <div class="tl-time">19:00 — večera</div>
+      <div class="tl-title">Pileća prsa s tikvicama na žaru</div>
+      <div class="recipe-inline">
+        <h4>Brzi wok</h4>
+        <ul>
+          <li>150g pilećih prsa — narezati, peći u tavi 8 min</li>
+          <li>1 tikvica + paprika narezana — dodati u tavu, miješati 5 min</li>
+          <li>Sezamovo ulje, kokosovi aminos, đumbir, sol</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot skin"></div>
+      <div class="tl-time">20:30 — tuš + rutina</div>
+      <div class="tl-title">Danas peru kosu (ako nije bila u petak/subotu)</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot sleep"></div>
+      <div class="tl-time">23:00</div>
+      <div class="tl-title">Spavanje 🌙</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SRIJEDA 19.5. ===== -->
+<div class="section" id="sri">
+  <div class="day-title">Srijeda, 19. svibnja</div>
+  <div class="day-subtitle">Faks 11:00–17:00 — spremi ručak ujutro, dug dan</div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot water"></div>
+      <div class="tl-time">07:00 — buđenje</div>
+      <div class="tl-title">500ml vode odmah</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot move"></div>
+      <div class="tl-time">07:10</div>
+      <div class="tl-title">10 min stretching + 20 min šetnja</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot skin"></div>
+      <div class="tl-time">07:35</div>
+      <div class="tl-title">Jutarnja rutina lica</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot food"></div>
+      <div class="tl-time">08:00 — doručak + priprema ručka</div>
+      <div class="tl-title">Frittata + priprema za faks</div>
+      <div class="recipe-inline">
+        <h4>Mini frittata (za doručak i ručak!)</h4>
+        <ul>
+          <li>5 jaja razmutiti</li>
+          <li>Špinat + paprika + mladi luk (zeleni dio)</li>
+          <li>Maslinovo ulje u tavi → povrće 2 min → uliti jaja → peći poklopljeno 8 min</li>
+          <li>Rezati na pola: jedna polovica doručak, druga u Tupperware za faks</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot study"></div>
+      <div class="tl-time">09:00–11:00</div>
+      <div class="tl-title">Pisanje (2h) dok je mozak svjež</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot study"></div>
+      <div class="tl-time">11:00–17:00 — faks</div>
+      <div class="tl-title">Faks — boca vode obavezno</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot food"></div>
+      <div class="tl-time">~13:00 — ručak na faksu</div>
+      <div class="tl-title">Frittata iz Tupperwarea + jabuka</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot food"></div>
+      <div class="tl-time">~15:30 — snack</div>
+      <div class="tl-title">Snack iz torbe</div>
+      <div class="snack-box"><strong>U torbi:</strong> orasi + jabuka + tamna čokolada 2 kockice</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot food"></div>
+      <div class="tl-time">19:00 — večera</div>
+      <div class="tl-title">Lagana večera — juha</div>
+      <div class="recipe-inline">
+        <h4>Pileća čorba s povrćem</h4>
+        <ul>
+          <li>Pileći file ili prsa (150g) u loncu s vodom 20 min</li>
+          <li>Dodati: mrkvu, celer, tikvicu, kurkumu, sol</li>
+          <li>Servirati s malo maslinovog ulja</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot skin"></div>
+      <div class="tl-time">20:30 — tuš + rutina</div>
+      <div class="tl-title">Opuštajući tuš, večernja rutina</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot sleep"></div>
+      <div class="tl-time">23:00</div>
+      <div class="tl-title">Spavanje 🌙</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ČETVRTAK 20.5. ===== -->
+<div class="section" id="cet">
+  <div class="day-title">Četvrtak, 20. svibnja</div>
+  <div class="day-subtitle">Slobodan dan — pisanje 3–5h, jači trening!</div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot water"></div>
+      <div class="tl-time">07:00 — buđenje</div>
+      <div class="tl-title">500ml vode odmah</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot move"></div>
+      <div class="tl-time">07:15</div>
+      <div class="tl-title">Stretching 10 min</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot food"></div>
+      <div class="tl-time">07:45 — doručak</div>
+      <div class="tl-title">Smoothie bowl</div>
+      <div class="recipe-inline">
+        <h4>Anti-upalni smoothie bowl</h4>
+        <ul>
+          <li>Blendati: šaka jagoda + 150ml kokosovog mlijeka + šaka špinata + ½ žličice kurkume + cimet</li>
+          <li>Uliti u zdjelu, posuti: sjemenke bundeve + orasi + 2 kockice tamne čokolade</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot move"></div>
+      <div class="tl-time">09:00 — TRENING</div>
+      <div class="tl-title">40 min home workout (bez opreme!)</div>
+      <div class="tl-desc">
+        <strong>Zagrijavanje 5 min:</strong> jumping jacks, marširanje u mjestu<br>
+        <strong>Krug 3× (30 sek rada / 15 sek odmora):</strong><br>
+        Čučnjevi → Iskoraci → Glute bridges → Knee push-ups → Mountain climbers → Plank<br>
+        <strong>Hlađenje 5 min:</strong> stretching nogu i leđa
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot water"></div>
+      <div class="tl-time">10:00 — nakon treninga</div>
+      <div class="tl-title">500ml vode odmah nakon treninga</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot food"></div>
+      <div class="tl-time">11:00 — ručak</div>
+      <div class="tl-title">Losos mediteranski</div>
+      <div class="recipe-inline">
+        <h4>Pečeni losos s rajčicom i maslinama</h4>
+        <ul>
+          <li>150g lososa u tavi 4 min po strani</li>
+          <li>Dodati: cherry rajčice, crne masline, kapar, timijan</li>
+          <li>Maslinovo ulje, limun, sol + rukola salata</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot study"></div>
+      <div class="tl-time">12:30–16:30 — pisanje (4h)</div>
+      <div class="tl-title">Pomodoro sesija</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot food"></div>
+      <div class="tl-time">16:30 — snack</div>
+      <div class="tl-title">Snack</div>
+      <div class="snack-box">Kokosov jogurt + trešnje + žlica sjemenki chia</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot food"></div>
+      <div class="tl-time">19:00 — večera</div>
+      <div class="tl-title">Tunjevina s pečenim povrćem</div>
+      <div class="recipe-inline">
+        <h4>Brza tuna zdjela</h4>
+        <ul>
+          <li>1 konzerva tunjevine</li>
+          <li>Pečena paprika + tikvica (u pećnici 20 min na 200°C)</li>
+          <li>Masline, kapar, limun, rukola</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot skin"></div>
+      <div class="tl-time">20:30 — večernja rutina</div>
+      <div class="tl-title">Lice + magnezij</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot sleep"></div>
+      <div class="tl-time">23:00</div>
+      <div class="tl-title">Spavanje 🌙</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PETAK 21.5. ===== -->
+<div class="section" id="pet21">
+  <div class="day-title">Petak, 21. svibnja</div>
+  <div class="day-subtitle">Slobodan dan — refleksija tjedna, opuštenije tempo</div>
+
+  <div class="info-box">✅ <strong>Kraj tjedna:</strong> Danas popodne napravi mini review — što si jela, kako si se osjećala, što ćeš poboljšati sljedeći tjedan.</div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot water"></div>
+      <div class="tl-time">07:00 — buđenje</div>
+      <div class="tl-title">500ml vode odmah</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot move"></div>
+      <div class="tl-time">07:15</div>
+      <div class="tl-title">Stretching 10 min</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot skin"></div>
+      <div class="tl-time">07:30</div>
+      <div class="tl-title">Jutarnja rutina lica</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot food"></div>
+      <div class="tl-time">08:00 — doručak</div>
+      <div class="tl-title">Avokado s jajima</div>
+      <div class="recipe-inline">
+        <h4>Avokado "tost" bez kruha</h4>
+        <ul>
+          <li>1 avokado — izgnječiti s limunovim sokom, solju, paprom</li>
+          <li>2 jaja na oko ili poached</li>
+          <li>Jesti žlicom ili s krastavcem/celerom kao "nosačem"</li>
+          <li>Šaka trešanja ili jagoda uz to</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot move"></div>
+      <div class="tl-time">09:30 — šetnja</div>
+      <div class="tl-title">Dulja šetnja 50 min</div>
+      <div class="tl-desc">Petak je slobodniji — iskoristi za dužu šetnju. Idealno negdje zeleno.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot food"></div>
+      <div class="tl-time">11:30 — ručak</div>
+      <div class="tl-title">Pileća salata s rukolom i šparogama</div>
+      <div class="recipe-inline">
+        <h4>Proljetna salata</h4>
+        <ul>
+          <li>Pečena piletina — narezati</li>
+          <li>Rukola + kuhane šparoge + cherry rajčice + masline</li>
+          <li>Dresing: maslinovo ulje + limun + sol + malo gorušice</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot study"></div>
+      <div class="tl-time">13:00–16:00 — pisanje (3h)</div>
+      <div class="tl-title">Završi tjedan na faksu</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot food"></div>
+      <div class="tl-time">16:30 — snack</div>
+      <div class="tl-title">Nešto slatko ali OK</div>
+      <div class="snack-box">Šaka bobičastog voća + tamna čokolada 2–3 kockice + biljni čaj bez šećera. <strong>Zaslužila si!</strong></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot food"></div>
+      <div class="tl-time">19:00 — večera</div>
+      <div class="tl-title">Losos s pesto od rukole</div>
+      <div class="recipe-inline">
+        <h4>Losos + rukola pesto (bez parmezana)</h4>
+        <ul>
+          <li>Pesto: blendati rukolu + orahe + maslinovo ulje + limun + sol</li>
+          <li>Losos peći 4 min po strani, preliti pestom</li>
+          <li>Uz to: brokula na pari</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot skin"></div>
+      <div class="tl-time">20:30 — posebna njega</div>
+      <div class="tl-title">Tjedna maska za lice + kosa</div>
+      <div class="tl-desc">
+        <strong>Lice:</strong> glinena maska ili maska s niacinamidom (10–15 min)<br>
+        <strong>Kosa:</strong> maslinovo ili kokosovo ulje na tjeme + duljine, 30 min pa operi<br>
+        Ovo je tvoj "spa petak" — zasluženo!
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot sleep"></div>
+      <div class="tl-time">23:00</div>
+      <div class="tl-title">Spavanje 🌙 — jedan tjedan gotov, bravo!</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== VODA ===== -->
+<div class="section" id="voda">
+  <div class="day-title">💧 Tracker za vodu</div>
+  <div class="day-subtitle">Klikni svaku čašu kad je popiješ. Cilj: 10 čaša (250ml) = 2.5L</div>
+  <div class="water-section">
+    <h3>Danas — 2.5L</h3>
+    <p>Svaka čaša = 250ml. Klikni kad popiješ!</p>
+    <div class="water-glasses" id="wg"></div>
+    <div class="water-count">Popila: <span id="wc">0</span> / 10 čaša (<span id="wml">0</span>ml)</div>
+  </div>
+  <div class="basics-grid">
+    <div class="bcard">
+      <div class="bcard-icon">⏰</div>
+      <h3>Raspored pijenja</h3>
+      <ul>
+        <li><span class="highlight">07:00</span> — 500ml odmah po buđenju</li>
+        <li><span class="highlight">08:30</span> — čaša uz doručak</li>
+        <li><span class="highlight">10:00</span> — čaša</li>
+        <li><span class="highlight">11:30</span> — pred ručak 300ml</li>
+        <li><span class="highlight">13:30</span> — čaša</li>
+        <li><span class="highlight">15:00</span> — čaša</li>
+        <li><span class="highlight">16:30</span> — pred snack</li>
+        <li><span class="highlight">18:30</span> — pred večeru 300ml</li>
+        <li><span class="highlight">20:00</span> — čaša</li>
+        <li><span class="highlight">21:30</span> — zadnja čaša + magnezij</li>
+      </ul>
+    </div>
+    <div class="bcard">
+      <div class="bcard-icon">🌿</div>
+      <h3>Čajevi koji pomažu</h3>
+      <ul>
+        <li><span class="highlight">Kopriva</span> — kosa, zadržavanje vode</li>
+        <li><span class="highlight">Đumbir + kurkuma</span> — upala, probava</li>
+        <li><span class="highlight">Kamilica</span> — crijeva, san</li>
+        <li><span class="highlight">Zeleni čaj</span> — metabolizam, koža</li>
+        <li><span class="highlight">Menta</span> — probava, napuhnutost</li>
+        <li>Svi bez šećera! Uz cimet je OK.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ===== KOŽA I KOSA ===== -->
+<div class="section" id="koza">
+  <div class="day-title">✨ Rutina za kožu i kosu</div>
+  <div class="day-subtitle">Dnevno, dosljedno — vidjet ćeš razliku za 3–4 tjedna</div>
+
+  <div class="warn-box">⚠️ Prištići po stražnjici i cijelom tijelu mogu biti znak hormona, prehrane (šećer!) ili trenja tkanine. Pamučno rublje, tuširati se odmah nakon znojenja, manje šećera = velika razlika.</div>
+
+  <h3 style="font-family:var(--serif);margin-bottom:16px;margin-top:8px">Jutarnja rutina lica (5–7 min)</h3>
+  <div class="bcard" style="margin-bottom:20px">
+    <div class="routine-step">
+      <div class="step-num">1</div>
+      <div class="step-body"><h4>Ispiranje mlakom vodom</h4><p>Bez sapuna ujutro — samo mlaka voda i nježno tapkanje ručnikom.</p></div>
+    </div>
+    <div class="routine-step">
+      <div class="step-num">2</div>
+      <div class="step-body"><h4>Niacinamide serum (10%)</h4><p>Staviti na vlažnu kožu, lagano utapkati. Smanjuje prištiće, pore, neravnomjernu boju. (The Inkey List, Revolution, Garnier Bright)</p></div>
+    </div>
+    <div class="routine-step">
+      <div class="step-num">3</div>
+      <div class="step-body"><h4>Lagana hidratantna krema</h4><p>Gel krema ili fluid — bez teških ulja. CeraVe, Neutrogena Hydro Boost, Bioderma.</p></div>
+    </div>
+    <div class="routine-step">
+      <div class="step-num">4</div>
+      <div class="step-body"><h4>SPF 30–50 (obavezan!)</h4><p>Sunce pogoršava prištiće i hiperpigmentaciju. Svaki dan. Lagani fluid SPF.</p></div>
+    </div>
+  </div>
+
+  <h3 style="font-family:var(--serif);margin-bottom:16px">Večernja rutina lica (10 min)</h3>
+  <div class="bcard" style="margin-bottom:20px">
+    <div class="routine-step">
+      <div class="step-num">1</div>
+      <div class="step-body"><h4>Micelarna voda</h4><p>Ukloni SPF i nečistoće. Pamučni jastučić, nježno — ne trljati.</p></div>
+    </div>
+    <div class="routine-step">
+      <div class="step-num">2</div>
+      <div class="step-body"><h4>Blagi gel čistač</h4><p>CeraVe Foaming ili La Roche-Posay Effaclar. Isprati hladnijom vodom.</p></div>
+    </div>
+    <div class="routine-step">
+      <div class="step-num">3</div>
+      <div class="step-body"><h4>BHA (salicilna kiselina 2%)</h4><p>Na problematična mjesta i stražnjicu. Paula's Choice 2% BHA ili The Ordinary Salicylic Acid. <strong>Ne koristiti oko očiju.</strong></p></div>
+    </div>
+    <div class="routine-step">
+      <div class="step-num">4</div>
+      <div class="step-body"><h4>Noćna hidratantna krema</h4><p>CeraVe Moisturising Cream ili Cetaphil.</p></div>
+    </div>
+    <div class="routine-step">
+      <div class="step-num">5</div>
+      <div class="step-body"><h4>Jastučić</h4><p>Mijenjaj svake 2–3 noći — bakterije s jastučića idu direktno na kožu!</p></div>
+    </div>
+  </div>
+
+  <h3 style="font-family:var(--serif);margin-bottom:16px">Tijelo i stražnjica</h3>
+  <div class="bcard" style="margin-bottom:20px">
+    <div class="routine-step">
+      <div class="step-num">1</div>
+      <div class="step-body"><h4>Dry brushing — prije tuša</h4><p>Kružnim pokretima od stopala prema gore. 3–5 min. Pomaže limfnoj drenaži, smanjuje "chicken skin".</p></div>
+    </div>
+    <div class="routine-step">
+      <div class="step-num">2</div>
+      <div class="step-body"><h4>Tuš gel s BHA ili salicilnom</h4><p>CeraVe SA Smoothing gel ili Sebamed Clear Face. Na stražnjicu i leđa.</p></div>
+    </div>
+    <div class="routine-step">
+      <div class="step-num">3</div>
+      <div class="step-body"><h4>Hidratacija tijela</h4><p>Lagani losion ili ulje — ne na prištiće. Shea butter OK za noge i ruke.</p></div>
+    </div>
+    <div class="routine-step">
+      <div class="step-num">4</div>
+      <div class="step-body"><h4>Pamučno rublje</h4><p>Sintetika = znojenje = prištići. 100% pamuk, posebno gaće. Mijenjaj svaki dan.</p></div>
+    </div>
+  </div>
+
+  <h3 style="font-family:var(--serif);margin-bottom:16px">Rutina za kosu</h3>
+  <div class="bcard">
+    <div class="routine-step">
+      <div class="step-num">1</div>
+      <div class="step-body"><h4>Pranje 2–3× tjedno (ne svaki dan!)</h4><p>Svakodnevno pranje isušuje tjeme → tjeme luči više sebuma → masna kosa.</p></div>
+    </div>
+    <div class="routine-step">
+      <div class="step-num">2</div>
+      <div class="step-body"><h4>Sulfate-free šampon</h4><p>Traži "sulfate free" ili "SLS free". OGX, Shu Uemura, Gyada, Pantene Miracles.</p></div>
+    </div>
+    <div class="routine-step">
+      <div class="step-num">3</div>
+      <div class="step-body"><h4>Kondicionator samo na duljine</h4><p>Nikad na tjeme. Na duljine ostavi 3 minute, isperi hladnom vodom.</p></div>
+    </div>
+    <div class="routine-step">
+      <div class="step-num">4</div>
+      <div class="step-body"><h4>Ulje tjedno (petak ili subota)</h4><p>Kokosovo ili maslinovo ulje — na tjeme, masirati 5 min, ostaviti 30 min, oprati.</p></div>
+    </div>
+    <div class="routine-step">
+      <div class="step-num">5</div>
+      <div class="step-body"><h4>Bez vrućeg fohna na mokru kosu</h4><p>Uvijek zaštitni sprej (heat protectant) prije fohna. Vrućina lomi kosu i ubrzava padanje.</p></div>
+    </div>
+    <div class="routine-step">
+      <div class="step-num">6</div>
+      <div class="step-body"><h4>Hrana za kosu</h4><p>Jaja (biotin), losos (omega-3), orasi (cink), bundeve (željezo), špinat (folat). Sve je već u tvom planu! ✅</p></div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /content -->
+
+<script>
+const sections = ['osnove','pet14','sub','ned','pon','uto','sri','cet','pet21','voda','koza'];
+
+function show(id) {
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const i = sections.indexOf(id);
+  if(i>=0) document.querySelectorAll('.nav-btn')[i].classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// Water tracker
+const wg = document.getElementById('wg');
+for(let i=0;i<10;i++){
+  const g = document.createElement('button');
+  g.className='glass';
+  g.textContent='🥛';
+  g.onclick=function(){
+    this.classList.toggle('filled');
+    this.textContent = this.classList.contains('filled') ? '💧' : '🥛';
+    const filled = document.querySelectorAll('.glass.filled').length;
+    document.getElementById('wc').textContent = filled;
+    document.getElementById('wml').textContent = filled * 250;
+  };
+  wg.appendChild(g);
+}
+</script>
+</body>
+</html>
